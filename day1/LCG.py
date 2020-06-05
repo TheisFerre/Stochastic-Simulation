@@ -132,6 +132,36 @@ def kolmogorov(rand_numbers, granularity=1000, plot=False):
     return test_stat
 
 
+def run_test(rand_numbers):
+    """
+    Performs run test on random uniform numbers
+    """
+
+    run_lengths = []
+
+    condition_order = []
+    for i in range(len(rand_numbers) - 1):
+        if rand_numbers[i] > rand_numbers[i+1]:
+            condition_order.append('>')
+        else:
+            condition_order.append('<')
+
+    current = condition_order[0]
+    count = 0
+    for i in range(len(condition_order)):
+        if condition_order[i] == current:
+            count += 1
+        else:
+            current = condition_order[i]
+            run_lengths.append(count)
+            count = 1
+
+    test_stat = (len(run_lengths) - (2*len(rand_numbers) - 1)/3) / \
+        np.sqrt((16*len(rand_numbers)-29)/90)
+
+    return test_stat
+
+
 print('#'*10)
 print('PERFORMING TEST ON LCG RNG:')
 
@@ -147,6 +177,8 @@ ks_stat = kolmogorov(rand_numbers, plot=True)
 
 print(f'Kolmogorov-smirnov Test Statistics: {round(ks_stat, 6)}')
 
+run_test_stat = run_test(rand_numbers)
+print(f'Run Test III Test Statistic: {run_test_stat}')
 
 # PERFORM TEST ON PYTHON RNG
 print('#'*10)
@@ -175,3 +207,5 @@ ks_stat = kolmogorov(rand_numbers_python, plot=True)
 
 print(f'Kolmogorov-smirnov Test Statistics: {round(ks_stat, 6)}')
 
+run_test_stat = run_test(rand_numbers_python)
+print(f'Run Test III Test Statistic: {run_test_stat}')
