@@ -65,9 +65,11 @@ system = BlockSystem(
 )
 ```
 System Dynamics:
+
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/Block_system_simulation.png)
 
 95% Confidence interval on fraction blocked/serviced
+
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/Block_system_simulation_confidence.png)
 
 
