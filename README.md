@@ -48,6 +48,40 @@ Test_statistic = run_test(numbers)
 Test_statistic = 0.869
 ```
 
+## Day 2
+This day we simulated both discrete and continous random variables from different distributions using the Uniform distribution.
+
+### Discrete sampling
+
+True probabilities:
+```python
+probabilities = np.array([7/48, 5/48, 1/8, 1/16, 1/4, 5/16])
+```
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/probs.png)
+
+Direct Method:
+```python
+direct_method(probabilities, plot=True)
+```
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/direct_sampling.png)
+
+Rejection Method:
+```python
+rejection_method(probabilities, plot=True)
+```
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/rejection_method.png)
+
+Alias Method:
+```python
+alias_method(probabilities, plot=True)
+```
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/alias_method.png)
+
+
 ## Day 3
 
 This day we was supposed to simulate "Block system". This system contains ```n``` service units, mean service unit time, mean customer arrival.
