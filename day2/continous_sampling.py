@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as stats
 
+plt.style.use('ggplot')
+
 
 def exp_dist(lamb, num_samples=10000, plot=False):
 
