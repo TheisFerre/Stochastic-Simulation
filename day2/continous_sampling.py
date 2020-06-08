@@ -121,13 +121,13 @@ for i in range(100):
     mean = samples.mean()
     std = samples.std()
 
+    # Calculate confidence intervals, note symmetry
     conf_val = std/np.sqrt(num_samples) * stats.t.ppf(1-0.05/2, num_samples-1)
-
-    mean_list.append(mean)
 
     upper = mean + conf_val
     lower = mean - conf_val
 
+    mean_list.append(mean)
     upper_list.append(upper)
     lower_list.append(lower)
 
