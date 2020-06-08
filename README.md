@@ -81,6 +81,61 @@ alias_method(probabilities, plot=True)
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/alias_method.png)
 
+### Continous Sampling
+
+In this section we sampled from continous distributions using the uniform distribution
+
+Exponential distribution ```exp(lambda=3)```:
+
+```python
+samples_exp = exp_dist(lambd=3, plot=True)
+```
+
+Here we also tested our simulated values using the Anderson-Darling test:
+```python
+test_stat_exp, critical_vals, significance = stats.anderson(samples_exp, dist='expon')
+Exponential Test statistic = 0.65182
+5_perc_critical_value = 1.341
+```
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/exponen.png)
+
+Normal Distribution ```N(mean=0, variance=1)```:
+
+```python
+samples_norm = normal_dist(plot=True)
+```
+
+Here we also tested our simulated values using the Kolmogorov-Smirnov test:
+```python
+test_stat_norm, p_val_norm = stats.kstest(samples_norm, 'norm')
+Normal Test statistic: 0.00788
+Normal p-value: 0.5632
+```
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/normal.png)
+
+Pareto Distribution ```P(beta=1, k=[2.05, 4]```:
+
+We can now compare our sampled pareto values from the true analytical mean/variance:
+
+```python
+k = 2.05
+beta = 1
+emp_mean, emp_var = pareto(beta=beta, k=k, plot=True, moments=True)
+
+analytical_mean = k/(k-1) * beta
+analytical_var = k / ((k-1)**2 * (k-2)) * beta**2
+```
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k205.png)
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k4.png)
+
+
+We also created 100 confidence intervals from our normal distribution using 10 samples:
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/normal_conf.png)
+
 
 ## Day 3
 
