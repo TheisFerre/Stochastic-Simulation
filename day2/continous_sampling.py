@@ -129,12 +129,6 @@ for i in range(100):
     upper_list.append(upper)
     lower_list.append(lower)
 
-    #plt.plot([i, i], [lower, upper], c='b')
-
-#plt.plot(list(range(100)), mean_list, c='r')
-#plt.title('100 95% Confidence intervals')
-# plt.show()
-
 # Plot 100 Confidence intervals
 plt.plot(list(range(100)), upper_list, c='b', linestyle='dashed')
 plt.plot(list(range(100)), lower_list, c='b', linestyle='dashed')
