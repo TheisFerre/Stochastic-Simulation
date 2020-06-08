@@ -1,5 +1,5 @@
-from scipy.stats import poisson, bernoulli, expon, t
-from math import sqrt
+from scipy.stats import poisson, erlang, bernoulli, expon, t
+from math import sqrt, exp
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -36,22 +36,38 @@ class BlockSystem():
     with no waiting room
     """
 
-    def __init__(self, num_service_units, mean_service_time, mean_customer_arrival):
+    def __init__(self, num_service_units, mean_service_time, mean_customer_arrival, customer_arrival_dist='poisson'):
 
         self.num_service_units = num_service_units
         self.mean_service_time = mean_service_time
         self.mean_customer_arrival = mean_customer_arrival
+        self.customer_arrival_dist = customer_arrival_dist
 
         # If we needed a waiting room
         # self.queue = deque()
 
-    def binary_poisson_sample(self, x):
+    def binary_customer_sample(self, x):
         """
         Function to draw bernoulli sample from Poisson dist.
         Used for arrival
         """
-        prob = poisson.cdf(x, self.mean_customer_arrival)
-        draw = int(bernoulli.rvs(prob))
+        if self.customer_arrival_dist == 'poisson':
+            prob = poisson.cdf(x, self.mean_customer_arrival)
+            draw = int(bernoulli.rvs(prob))
+
+        elif self.customer_arrival_dist == 'erlang':
+            prob = erlang.cdf(x, self.mean_customer_arrival)
+            draw = int(bernoulli.rvs(prob))
+
+        elif self.customer_arrival_dist == 'hyperexp':
+            prob = 0
+            for params in self.mean_customer_arrival:
+                prob += params[0] * exp(-params[1] * x)
+            draw = int(bernoulli.rvs(1-prob))
+
+        else:
+            prob = poisson.cdf(x, self.mean_customer_arrival)
+            draw = int(bernoulli.rvs(prob))
 
         return draw
 
@@ -92,7 +108,7 @@ class BlockSystem():
             # Question for TA's, is it only a single customer that arrives, or multiple (10)?
 
             # See if customer arrives, assume customer arrives at timepoint 0:
-            if self.binary_poisson_sample(last_customer_arrival) or iter_count == 0:
+            if self.binary_customer_sample(last_customer_arrival) or iter_count == 0:
                 last_customer_arrival = 0
                 customer_serviced = False
 
@@ -164,9 +180,9 @@ class BlockSystem():
             sum_frac_squared = 0
             for j in range(simulations):
 
-                # Blocked/serviced
+                # Blocked/total
                 fraction = simulations_list[j][0][i] / \
-                    simulations_list[j][1][i]
+                    (simulations_list[j][1][i] + simulations_list[j][0][i])
 
                 sum_frac += fraction
                 sum_frac_squared += fraction**2
@@ -215,10 +231,23 @@ mean_customer_arrival = 3
 system = BlockSystem(
     num_service_units=num_service_units,
     mean_service_time=mean_service_time,
-    mean_customer_arrival=mean_customer_arrival
+    mean_customer_arrival=mean_customer_arrival,
+    customer_arrival_dist='erlang'
 )
+
+
+"""
+mean_customer_arrival = [(0.8, 0.8333), (0.2, 5)]
+# Hyper Exponential
+system = BlockSystem(
+    num_service_units=num_service_units,
+    mean_service_time=mean_service_time,
+    mean_customer_arrival=mean_customer_arrival,
+    customer_arrival_dist='hyperexp'
+)
+"""
 
 blocked, serviced, service_avail = system.simulate(
     simulation_period=1000, plot=True)
 
-system(simulations=10, simulation_period=1000, plot=True)
+system(simulations=5, simulation_period=500, plot=True)
