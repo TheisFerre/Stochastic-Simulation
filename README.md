@@ -119,6 +119,8 @@ We also created 100 confidence intervals from our normal distribution using 10 s
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/normal_conf.png)
 
+In the plot above we see that it is very noisy and that the confidence intervals are quite wide. This is due to the small sample size of 10, that leads to a lot of noise. We do however see our mean oscillate around mean 0 which is encouraging and expected.
+
 #### Pareto Distribution ```P(beta=1, k=[2.05, 4]```:
 
 We can now compare our sampled pareto values from the true analytical mean/variance:
