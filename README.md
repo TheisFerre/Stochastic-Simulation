@@ -15,13 +15,13 @@ plt.hist(numbers, bins=10)
 ```
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/Histogram_expectation.png)
 
-Test for correlation
+### Test for correlation
 ```python
 plt.scatter(numbers[:len(numbers)-1], numbers[1:])
 ```
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/Scatter_plot_corr.png)
 
-Chi-squared Test
+### Chi-squared Test
 ```python
 Test_statistic, p_val = chi_squared(numbers, num_classes=10)
 ```
@@ -31,7 +31,7 @@ Test_statistic = 5.986
 p_val = 0.7413
 ```
 
-Kolmogorov-Smirnov Test
+### Kolmogorov-Smirnov Test
 ```python
 Adjusted_test_statistic = kolmogorov(numbers)
 ```
@@ -40,7 +40,7 @@ Adjusted_test_statistic = 1.02
 ```
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/Kolmogorov.png)
 
-Run-Test III
+### Run-Test III
 ```python
 Test_statistic = run_test(numbers)
 ```
@@ -53,28 +53,28 @@ This day we simulated both discrete and continous random variables from differen
 
 ### Discrete sampling
 
-True probabilities:
+#### True probabilities:
 ```python
 probabilities = np.array([7/48, 5/48, 1/8, 1/16, 1/4, 5/16])
 ```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/probs.png)
 
-Direct Method:
+#### Direct Method:
 ```python
 direct_method(probabilities, plot=True)
 ```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/direct_sampling.png)
 
-Rejection Method:
+#### Rejection Method:
 ```python
 rejection_method(probabilities, plot=True)
 ```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/rejection_method.png)
 
-Alias Method:
+#### Alias Method:
 ```python
 alias_method(probabilities, plot=True)
 ```
@@ -85,7 +85,7 @@ alias_method(probabilities, plot=True)
 
 In this section we sampled from continous distributions using the uniform distribution
 
-Exponential distribution ```exp(lambda=3)```:
+#### Exponential distribution ```exp(lambda=3)```:
 
 ```python
 samples_exp = exp_dist(lambd=3, plot=True)
@@ -100,7 +100,7 @@ Exponential Test statistic = 0.65182
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/exponen.png)
 
-Normal Distribution ```N(mean=0, variance=1)```:
+#### Normal Distribution ```N(mean=0, variance=1)```:
 
 ```python
 samples_norm = normal_dist(plot=True)
@@ -114,7 +114,12 @@ Normal p-value: 0.5632
 ```
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/normal.png)
 
-Pareto Distribution ```P(beta=1, k=[2.05, 4]```:
+
+We also created 100 confidence intervals from our normal distribution using 10 samples:
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/normal_conf.png)
+
+#### Pareto Distribution ```P(beta=1, k=[2.05, 4]```:
 
 We can now compare our sampled pareto values from the true analytical mean/variance:
 
@@ -130,12 +135,6 @@ analytical_var = k / ((k-1)**2 * (k-2)) * beta**2
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k205.png)
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k4.png)
-
-
-We also created 100 confidence intervals from our normal distribution using 10 samples:
-
-![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/normal_conf.png)
-
 
 ## Day 3
 
