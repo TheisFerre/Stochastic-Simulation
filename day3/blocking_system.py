@@ -1,4 +1,4 @@
-from scipy.stats import poisson, erlang, bernoulli, expon, t
+from scipy.stats import poisson, erlang, pareto, bernoulli, expon, t
 from math import sqrt, exp
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,19 +9,24 @@ class ServiceUnit():
     Represents a Service Unit
     """
 
-    def __init__(self, mean_service_time, last_service=0, service_available=True):
+    def __init__(self, mean_service_time, last_service=0, service_available=True, service_time_dist='expon'):
 
         self.last_service = last_service
         self.service_available = service_available
         self.mean_service_time = mean_service_time
+        self.service_time_dist = service_time_dist
 
     def update_service_status(self):
         """
         Function for updating service status of unit
         """
 
-        prob = expon.cdf(self.last_service, self.mean_service_time)
-        draw = int(bernoulli.rvs(prob))
+        if self.service_time_dist == 'expon':
+            prob = expon.cdf(self.last_service, self.mean_service_time)
+            draw = int(bernoulli.rvs(prob))
+        elif self.service_time_dist == 'pareto':
+            prob = pareto.cdf(self.last_service, self.mean_service_time)
+            draw = int(bernoulli.rvs(prob))
 
         if draw:
             self.service_available = True
@@ -36,12 +41,19 @@ class BlockSystem():
     with no waiting room
     """
 
-    def __init__(self, num_service_units, mean_service_time, mean_customer_arrival, customer_arrival_dist='poisson'):
+    def __init__(self,
+                 num_service_units,
+                 mean_service_time,
+                 mean_customer_arrival,
+                 customer_arrival_dist='poisson',
+                 service_time_dist='expon',
+                 ):
 
         self.num_service_units = num_service_units
         self.mean_service_time = mean_service_time
         self.mean_customer_arrival = mean_customer_arrival
         self.customer_arrival_dist = customer_arrival_dist
+        self.service_time_dist = service_time_dist
 
         # If we needed a waiting room
         # self.queue = deque()
@@ -84,7 +96,7 @@ class BlockSystem():
         last_customer_arrival = 0
 
         # Initialise service units
-        service_units = [ServiceUnit(self.mean_service_time)
+        service_units = [ServiceUnit(self.mean_service_time, service_time_dist=self.service_time_dist)
                          for i in range(self.num_service_units)]
 
         for service_unit in service_units:
@@ -225,14 +237,15 @@ class BlockSystem():
 
 # TESTING
 num_service_units = 10
-mean_service_time = 45
-mean_customer_arrival = 3
+mean_service_time = 35
+mean_customer_arrival = 1
 
 system = BlockSystem(
     num_service_units=num_service_units,
     mean_service_time=mean_service_time,
     mean_customer_arrival=mean_customer_arrival,
-    customer_arrival_dist='erlang'
+    customer_arrival_dist='erlang',
+    service_time_dist='expon'
 )
 
 
