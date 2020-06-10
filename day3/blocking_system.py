@@ -1,7 +1,8 @@
 from scipy.stats import poisson, erlang, pareto, bernoulli, expon, t
-from math import sqrt, exp
+from math import sqrt, exp, log
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 
 class ServiceUnit():
@@ -11,28 +12,38 @@ class ServiceUnit():
 
     def __init__(self, mean_service_time, last_service=0, service_available=True, service_time_dist='expon'):
 
-        self.last_service = last_service
+        # self.last_service = last_service
+        self.next_service = 0
+
         self.service_available = service_available
         self.mean_service_time = mean_service_time
         self.service_time_dist = service_time_dist
 
-    def update_service_status(self):
+    def exp_dist(self):
+        rand = random.random()
+        time_step = -self.mean_service_time * log(rand)
+
+        return time_step
+
+    def sample_service_time(self, time):
         """
-        Function for updating service status of unit
+        Sample next availability for service unit
         """
 
         if self.service_time_dist == 'expon':
-            prob = expon.cdf(self.last_service, self.mean_service_time)
-            draw = int(bernoulli.rvs(prob))
-        elif self.service_time_dist == 'pareto':
-            prob = pareto.cdf(self.last_service, self.mean_service_time)
-            draw = int(bernoulli.rvs(prob))
+            service_avail_time = time + self.exp_dist()
 
-        if draw:
+        elif self.service_time_dist == 'pareto':
+            service_avail_time = time + pareto.rvs(self.mean_service_time)
+
+        self.next_service = service_avail_time
+
+    def update_service_status(self, time):
+        """
+        Function for updating service status of unit
+        """
+        if time >= self.next_service:
             self.service_available = True
-            self.last_service = 0
-        else:
-            self.last_service += 1
 
 
 class BlockSystem():
@@ -45,7 +56,7 @@ class BlockSystem():
                  num_service_units,
                  mean_service_time,
                  mean_customer_arrival,
-                 customer_arrival_dist='poisson',
+                 customer_arrival_dist='expon',
                  service_time_dist='expon',
                  ):
 
@@ -58,42 +69,49 @@ class BlockSystem():
         # If we needed a waiting room
         # self.queue = deque()
 
-    def binary_customer_sample(self, x):
+    def exp_dist(self):
+        rand = random.random()
+        time_step = -self.mean_customer_arrival * log(rand)
+
+        return time_step
+
+    def customer_sample(self):
         """
         Function to draw bernoulli sample from Poisson dist.
         Used for arrival
         """
-        if self.customer_arrival_dist == 'poisson':
-            prob = poisson.cdf(x, self.mean_customer_arrival)
-            draw = int(bernoulli.rvs(prob))
+
+        if self.customer_arrival_dist == 'expon':
+            #time_step = poisson.rvs(self.mean_customer_arrival)
+            time_step = self.exp_dist()
 
         elif self.customer_arrival_dist == 'erlang':
-            prob = erlang.cdf(x, self.mean_customer_arrival)
-            draw = int(bernoulli.rvs(prob))
+            time_step = erlang.rvs(self.mean_customer_arrival)
 
         elif self.customer_arrival_dist == 'hyperexp':
-            prob = 0
-            for params in self.mean_customer_arrival:
-                prob += params[0] * exp(-params[1] * x)
-            draw = int(bernoulli.rvs(1-prob))
+            rand1 = random.random()
+            rand2 = random.random()
 
-        else:
-            prob = poisson.cdf(x, self.mean_customer_arrival)
-            draw = int(bernoulli.rvs(prob))
+            if rand1 < self.mean_customer_arrival[0][0]:
+                time_step = -1/self.mean_customer_arrival[0][1] * log(rand2)
+            else:
+                time_step = -1/self.mean_customer_arrival[1][1] * log(rand2)
 
-        return draw
+        return time_step
 
-    def simulate(self, simulation_period=500, plot=False):
+    def simulate(self, simulation_customers=10000, plot=False):
+        """
+        Simulate system
+        """
 
         num_blocked = 0
         num_serviced = 0
 
         # Initialize lists for blocked/serviced customers
-        service_available_list = [0] * simulation_period
-        blocked_list = [0] * simulation_period
-        serviced_list = [0] * simulation_period
-
-        last_customer_arrival = 0
+        service_available_list = [0] * (simulation_customers + 1)
+        blocked_list = [0] * (simulation_customers + 1)
+        serviced_list = [0] * (simulation_customers + 1)
+        time_steps = [0]
 
         # Initialise service units
         service_units = [ServiceUnit(self.mean_service_time, service_time_dist=self.service_time_dist)
@@ -103,45 +121,39 @@ class BlockSystem():
             service_unit.last_service = 0
             service_unit.service_available = True
 
-        iter_count = 0
+        iter_count = 1
 
         # Simulate system
-        while simulation_period > iter_count:
+        while num_blocked + num_serviced < simulation_customers:
+
+            time_step = self.customer_sample()
+            time_steps.append(time_steps[-1] + time_step)
 
             service_avail_count = 0
+
             # Update service units:
             for service_unit in service_units:
-                service_unit.update_service_status()
+                service_unit.update_service_status(time_steps[-1])
 
                 # Count number of service units available
                 if service_unit.service_available:
                     service_avail_count += 1
 
-            # Question for TA's, is it only a single customer that arrives, or multiple (10)?
+            # Service the customer
+            customer_serviced = False
+            for service_unit in service_units:
+                if service_unit.service_available:
+                    customer_serviced = True
 
-            # See if customer arrives, assume customer arrives at timepoint 0:
-            if self.binary_customer_sample(last_customer_arrival) or iter_count == 0:
-                last_customer_arrival = 0
-                customer_serviced = False
+                    service_unit.service_available = False
+                    service_unit.sample_service_time(time_steps[-1])
+                    break
 
-                # Service the customer
-                for service_unit in service_units:
-                    if service_unit.service_available:
-                        customer_serviced = True
-
-                        service_unit.service_available = False
-                        service_unit.last_service = 0
-                        break
-
-                # Log customer service
-                if customer_serviced:
-                    num_serviced += 1
-                else:
-                    num_blocked += 1
-
-            # Increment last arrival of customer
+            # Log customer service
+            if customer_serviced:
+                num_serviced += 1
             else:
-                last_customer_arrival += 1
+                num_blocked += 1
 
             # Log blocked and serviced
             blocked_list[iter_count] = num_blocked
@@ -152,13 +164,13 @@ class BlockSystem():
 
         # Plot evolution of blocked vs. serviced units
         if plot:
-            plt.plot(list(range(len(blocked_list))),
+            plt.plot(time_steps,
                      blocked_list, color='b', label='Blocked')
 
-            plt.plot(list(range(len(serviced_list))),
+            plt.plot(time_steps,
                      serviced_list, color='r', label='serviced')
 
-            plt.plot(list(range(len(service_available_list))), service_available_list,
+            plt.plot(time_steps, service_available_list,
                      color='g', label='Service Units Available')
 
             plt.text(len(blocked_list)-1,
@@ -173,94 +185,103 @@ class BlockSystem():
 
         return blocked_list, serviced_list, service_available_list
 
-    def __call__(self, simulations=10, simulation_period=500, alpha=0.05, plot=False):
+    def __call__(self, simulations=10, simulation_customers=10000, alpha=0.05, plot=False):
+        """
+        Simulate system multiple times
+        """
 
         simulations_list = []
 
         # Create a number of different simulations
-        for i in range(simulations):
-            simulations_list.append(self.simulate(simulation_period))
+        for _ in range(simulations):
+            simulations_list.append(self.simulate(simulation_customers))
 
-        # Initialize lists for statistics
-        mean_fraction_list = [0] * simulation_period
-        var_fraction_list = [0] * simulation_period
-        conf_interval = [0] * simulation_period
+        simulations_mat = np.array(simulations_list)
+
+        total_customers = simulations_mat[:, 0, 1:] + simulations_mat[:, 1, 1:]
 
         # Compute statistics
-        for i in range(simulation_period):
-            sum_frac = 0
-            sum_frac_squared = 0
-            for j in range(simulations):
+        means = (simulations_mat[:, 0, 1:] /
+                 total_customers).mean(axis=0)
+        std = (simulations_mat[:, 0, 1:] /
+               total_customers).std(axis=0)
+        CI_arr = std / sqrt(simulations) * t.ppf(1-alpha/2, simulations-1)
 
-                # Blocked/total
-                fraction = simulations_list[j][0][i] / \
-                    (simulations_list[j][1][i] + simulations_list[j][0][i])
-
-                sum_frac += fraction
-                sum_frac_squared += fraction**2
-
-            mean_fraction_list[i] = sum_frac/simulations
-            var_fraction_list[i] = 1/(simulations-1) * (sum_frac_squared -
-                                                        simulations * mean_fraction_list[i]**2)
-
-            conf_interval[i] = sqrt(
-                var_fraction_list[i])/sqrt(simulations) * t.ppf(1-alpha/2, simulations-1)
-
-        # Create +- confidence intervals on fractions
-        conf_interval_neg = np.array(
-            mean_fraction_list) - np.array(conf_interval)
-        conf_interval_pos = np.array(
-            mean_fraction_list) + np.array(conf_interval)
+        conf_neg = means - CI_arr
+        conf_pos = means + CI_arr
 
         # Plot confidence intervals
         if plot:
-            plt.plot(list(range(simulation_period)),
-                     mean_fraction_list, color='r', label='Mean Fraction')
+            plt.plot(list(range(simulation_customers)),
+                     means, color='r', label='Mean Fraction')
 
-            plt.plot(list(range(simulation_period)), conf_interval_pos, color='r',
+            plt.plot(list(range(simulation_customers)), conf_pos, color='r',
                      linestyle='dashed')
-            plt.plot(list(range(simulation_period)), conf_interval_neg, color='r',
+            plt.plot(list(range(simulation_customers)), conf_neg, color='r',
                      linestyle='dashed', label=f'{1-alpha}% Confidence interval')
 
-            plt.text(simulation_period-1,
-                     mean_fraction_list[-1], str(
-                         round(mean_fraction_list[-1], 2)))
+            plt.text(simulation_customers-1,
+                     means[-1], str(round(means[-1], 2)))
 
             plt.title(
-                f'Final Fraction: {round(mean_fraction_list[-1], 3)}, Confidence: {round(mean_fraction_list[-1], 3)}+-{round(conf_interval[-1], 3)}')
+                f'Final Fraction: {round(means[-1], 3)}, Confidence: {round(means[-1], 3)}+-{round(CI_arr[-1], 3)}')
 
             plt.legend()
             plt.show()
-
-        return self.simulate(simulation_period)
+        return means, CI_arr
 
 
 # TESTING
 num_service_units = 10
-mean_service_time = 35
+mean_service_time = 8
+mean_customer_arrival = 1
+
+
+system = BlockSystem(
+    num_service_units=num_service_units,
+    mean_service_time=mean_service_time,
+    mean_customer_arrival=mean_customer_arrival,
+    customer_arrival_dist='expon',  # expon/erlang/hyperexp
+    service_time_dist='expon'  # expon/pareto
+)
+
+blocked, serviced, service_avail = system.simulate(
+    simulation_customers=10000, plot=True)
+
+system(simulations=10, simulation_customers=10000, plot=True)
+
+# Pareto
+num_service_units = 10
+mean_service_time = 1.1
 mean_customer_arrival = 1
 
 system = BlockSystem(
     num_service_units=num_service_units,
     mean_service_time=mean_service_time,
     mean_customer_arrival=mean_customer_arrival,
-    customer_arrival_dist='erlang',
-    service_time_dist='expon'
+    customer_arrival_dist='erlang',  # expon/erlang/hyperexp
+    service_time_dist='pareto'  # expon/pareto
 )
 
+blocked, serviced, service_avail = system.simulate(
+    simulation_customers=10000, plot=True)
 
-"""
-mean_customer_arrival = [(0.8, 0.8333), (0.2, 5)]
+system(simulations=10, simulation_customers=10000, plot=True)
+
 # Hyper Exponential
+num_service_units = 10
+mean_service_time = 1
+mean_customer_arrival = [(0.8, 0.8333), (0.2, 5)]
 system = BlockSystem(
     num_service_units=num_service_units,
     mean_service_time=mean_service_time,
     mean_customer_arrival=mean_customer_arrival,
-    customer_arrival_dist='hyperexp'
+    customer_arrival_dist='hyperexp',
+    service_time_dist='pareto'
 )
-"""
+
 
 blocked, serviced, service_avail = system.simulate(
-    simulation_period=1000, plot=True)
+    simulation_customers=10000, plot=True)
 
-system(simulations=5, simulation_period=500, plot=True)
+system(simulations=10, simulation_customers=10000, plot=True)
