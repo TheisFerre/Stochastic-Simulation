@@ -170,7 +170,7 @@ This day we discovered various variance reduction methods. As an example we used
 
 We found that the original variance was ```1.07e-05``` but after variance reduction it was reduced to ```4.831```
 
-Additionally, we used the  Common Random method for two different simulations of our blocking system. Here we used the two following simulations:
+Additionally, we used the  Common Random method for comparing two different simulations of our blocking system. Here we used the two following simulations:
 
 ```python
 ## SIMULATION 1
@@ -203,9 +203,11 @@ system_exp = BlockSystem(
 )
 ```
 
-$\hat{\theta}$
 
-The estimator 
+
+The estimator for the difference of the two systems is given by $\hat{\theta}_{2} - \hat{\theta}_{1}$, where each $\hat{\theta}$ is computed by simulating it several times. An important feature of the common random numbers method, is that the same (pseudo) randomly generated numbers are used for both simulation such that they can be compared properly eliminating difference that could come from randomness.
+
+Using a 95% confidence interval we found: $\hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm 0.0023$
 
 
 
