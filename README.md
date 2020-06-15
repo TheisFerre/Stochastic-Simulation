@@ -205,9 +205,28 @@ system_exp = BlockSystem(
 
 
 
-The estimator for the difference of the two systems is given by $\hat{\theta}_{2} - \hat{\theta}_{1}$, where each $\hat{\theta}$ is computed by simulating it several times. An important feature of the common random numbers method, is that the same (pseudo) randomly generated numbers are used for both simulation such that they can be compared properly eliminating difference that could come from randomness.
+The estimator for the difference of the two systems is given by <img src="https://bit.ly/30IFcE4" align="center" border="0" alt="\hat{\theta}_{2} - \hat{\theta}_{1}" width="61" height="22" />, where each <img src="https://bit.ly/3e7Jhpm" align="center" border="0" alt="\hat{\theta}" width="17" height="19" /> is computed by simulating it several times. An important feature of the common random numbers method, is that the same (pseudo) randomly generated numbers are used for both simulation such that they can be compared properly eliminating difference that could come from randomness.
 
-Using a 95% confidence interval we found: $\hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm 0.0023$
+Using a 95% confidence interval we found: <img src="https://bit.ly/3e2FxFN" align="center" border="0" alt="\hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm  0.0023" width="214" height="22" />
+
+
+**Day5
+
+This day we discovered the Markov Chain Monte Carlo (MCMC) method for estimating distributions.
+
+First we used the following function for MCMC:
+<img src="https://bit.ly/37zbMdg" align="center" border="0" alt="P(i) = \frac{\frac{A^{i}}{i!}} {\sum_{j=0}^{N} \frac{A^{j}}{j!} }, \quad j=0 \dots N" width="219" height="65" />, letting N=10 and alpha=3.
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC1.png)
+
+
+
+
+
+
+
+
+
 
 
 
