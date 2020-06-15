@@ -205,9 +205,9 @@ system_exp = BlockSystem(
 
 
 
-The estimator for the difference of the two systems is given by <img src="https://render.githubusercontent.com/render/math?math=\hat{\theta}_{2} - \hat{\theta}_{1}">, where each <img src="https://render.githubusercontent.com/render/math?math= \hat{\theta}"> is computed by simulating it several times. An important feature of the common random numbers method, is that the same (pseudo) randomly generated numbers are used for both simulation such that they can be compared properly eliminating difference that could come from randomness.
+The estimator for the difference of the two systems is given by <img src="https://render.githubusercontent.com/render/math?math=\hat{\theta}_{2} - \hat{\theta}_{1}">, where each <img src="https://render.githubusercontent.com/render/math?math=\hat{\theta}"> is computed by simulating it several times. An important feature of the common random numbers method, is that the same (pseudo) randomly generated numbers are used for both simulation such that they can be compared properly eliminating difference that could come from randomness.
 
-Using a 95% confidence interval we found: <img src="https://render.githubusercontent.com/render/math?math= \hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm  0.0023">
+Using a 95% confidence interval we found: <img src="https://render.githubusercontent.com/render/math?math=\hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm  0.0023">
 
 
 ## Day5
