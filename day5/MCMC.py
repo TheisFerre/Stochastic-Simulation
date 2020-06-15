@@ -119,6 +119,7 @@ def count_samples(samples):
         try:
             class_list[i] = dict_classes[i]
         except:
+            pass
 
     return class_list
 
@@ -132,6 +133,7 @@ print('CHI SQUARED EXERCISE 1')
 print(chisquare(f_obs=sample_hist))
 
 plt.plot(samples)
+plt.title('MCMC 1-variable')
 plt.show()
 
 
@@ -179,13 +181,13 @@ print(chisquare(f_obs=y_samples))
 
 
 plt.plot(x_vals, y_vals)
-plt.title('(X,Y)-values')
+plt.title('MCMC 2-variables')
 plt.show()
 
 
 plt.plot(x_vals)
 plt.plot(y_vals)
-plt.title('X and Y-values')
+plt.title('(X,Y) trajectory')
 plt.show()
 
 
@@ -194,7 +196,7 @@ plt.show()
 
 alpha1 = 17
 alpha2 = 12
-n = 40
+n = 10
 
 # Marginalize functions
 
@@ -299,5 +301,5 @@ plt.show()
 
 plt.plot(x_vals)
 plt.plot(y_vals)
-plt.title('X and Y-values')
+plt.title('(X,Y) trajectory')
 plt.show()

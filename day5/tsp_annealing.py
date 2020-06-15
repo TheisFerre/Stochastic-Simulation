@@ -54,7 +54,7 @@ def permute_points(points):
 # Change temp for every second step (maybe)
 
 
-"""points = []
+points = []
 
 for num in np.linspace(0, 2*np.pi, 8):
 
@@ -107,7 +107,7 @@ y_vals.append(y_vals[0])
 plt.plot(x_vals, y_vals)
 plt.scatter(x_vals, y_vals, c='r', s=30)
 plt.title(f'Start cost {cost_start}, End cost {cost_end}')
-plt.show()"""
+plt.show()
 
 
 def energy_cost(stations, cost_mat):
@@ -157,10 +157,7 @@ for i in range(num_samples):
         fy = func2(y, k, costs)
         fx = func2(stations, k, costs)
 
-        print(fy, fx)
-
         accept_prob = min(1, fy / fx)
-        # print(accept_prob)
 
         rand1 = random.random()
 
@@ -180,4 +177,6 @@ print(samples[-1])
 # print(min(cost_list))
 
 plt.plot(cost_list)
+plt.title(f'start cost: {cost_start}, end cost: {cost_end}')
+plt.ylabel('cost')
 plt.show()
