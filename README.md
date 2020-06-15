@@ -145,22 +145,24 @@ The system simulates customers that show up to a store to get a service from one
 
 ```python
 num_service_units = 10
-mean_service_time = 45
-mean_customer_arrival = 3
+mean_service_time = 8
+mean_customer_arrival = 1
 
 system = BlockSystem(
     num_service_units=num_service_units,
     mean_service_time=mean_service_time,
-    mean_customer_arrival=mean_customer_arrival
+    mean_customer_arrival=mean_customer_arrival,
+    customer_arrival_dist='expon',  # expon/erlang/hyperexp
+    service_time_dist='expon'  # expon/pareto
 )
 ```
 System Dynamics:
 
-![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/Block_system_simulation.png)
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/blocking_system.png)
 
 95% Confidence interval on fraction blocked/serviced
 
-![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/Block_system_simulation_confidence.png)
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/confidence_blocking.png)
 
 
 
