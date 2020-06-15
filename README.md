@@ -205,9 +205,9 @@ system_exp = BlockSystem(
 
 
 
-The estimator for the difference of the two systems is given by <img src="https://bit.ly/30IFcE4" align="center" border="0" alt="\hat{\theta}_{2} - \hat{\theta}_{1}" width="61" height="22" />, where each <img src="https://bit.ly/3e7Jhpm" align="center" border="0" alt="\hat{\theta}" width="17" height="19" /> is computed by simulating it several times. An important feature of the common random numbers method, is that the same (pseudo) randomly generated numbers are used for both simulation such that they can be compared properly eliminating difference that could come from randomness.
+The estimator for the difference of the two systems is given by <img src="https://render.githubusercontent.com/render/math?math=\hat{\theta}_{2} - \hat{\theta}_{1}">, where each <img src="https://render.githubusercontent.com/render/math?math= \hat{\theta}"> is computed by simulating it several times. An important feature of the common random numbers method, is that the same (pseudo) randomly generated numbers are used for both simulation such that they can be compared properly eliminating difference that could come from randomness.
 
-Using a 95% confidence interval we found: <img src="https://bit.ly/3e2FxFN" align="center" border="0" alt="\hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm  0.0023" width="214" height="22" />
+Using a 95% confidence interval we found: <img src="https://render.githubusercontent.com/render/math?math= \hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm  0.0023">
 
 
 ## Day5
@@ -217,7 +217,7 @@ Using a 95% confidence interval we found: <img src="https://bit.ly/3e2FxFN" alig
 This day we discovered the Markov Chain Monte Carlo (MCMC) method for estimating distributions.
 
 First we used the following function for MCMC:
-<img src="https://bit.ly/37zbMdg" align="center" border="0" alt="P(i) = \frac{\frac{A^{i}}{i!}} {\sum_{j=0}^{N} \frac{A^{j}}{j!} }, \quad j=0 \dots N" width="219" height="65" />, letting N=10 and alpha=3.
+<img src="https://render.githubusercontent.com/render/math?math=P(i) = \frac{\frac{A^{i}}{i!}} {\sum_{j=0}^{N} \frac{A^{j}}{j!} }, \quad j=0 \dots N">, letting N=10 and alpha=3.
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC1.png)
 
@@ -225,7 +225,7 @@ Chi-squared Test: ```p-value=0.0116```
 
 
 Next we extended the function to:
-<img src="https://bit.ly/2MYWTr4" align="center" border="0" alt="P(i,j) = \frac{1}{K} \frac{A_{1}^{i}}{i!}\frac{A_{2}^{j}}{j!}, \quad 0\leq i+j \leq N" width="256" height="53" />, where the term 1/K is removed as this is a normalization constant that we will not approximate. 
+<img src="https://render.githubusercontent.com/render/math?math=P(i,j) = \frac{1}{K} \frac{A_{1}^{i}}{i!}\frac{A_{2}^{j}}{j!}, \quad 0\leq i+j \leq N">, where the term 1/K is removed as this is a normalization constant that we will not approximate. 
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC21.png)
 
@@ -239,9 +239,10 @@ Chi-squared Test (Y-values): ```pvalue=3.231e-15```
 
 We now found conditional distributions for the function given in previous simulation. The two conditional distributions were analytically found to be:
 
-<img src="https://bit.ly/2Y2aGnd" align="center" border="0" alt="P(i | j) = \frac{\frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!}}{\sum_{i=0}^{N-j} \frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!} }" width="147" height="78" />
+<img src="https://render.githubusercontent.com/render/math?math=P(i | j) = \frac{\frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!}}{\sum_{i=0}^{N-j} \frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!} }">
 
-<img src="https://bit.ly/3fn8LiK" align="center" border="0" alt="P(j | i) = \frac{\frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!}}{\sum_{j=0}^{N-i} \frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!} }" width="147" height="79" />
+<img src="https://render.githubusercontent.com/render/math?math=P(j | i) = \frac{\frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!}}{\sum_{j=0}^{N-i} \frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!} }">
+
 
 ```python
 alpha1 = 17
@@ -262,7 +263,7 @@ Chi-squared Test (Y-values): ```pvalue=2.732e-53```
 
 ### TSP Simulated Annealing
 
-We now used Simulated annealing to minimize cost on a TSP problem given a cost matrix over 20 cities. Simulated Annealing is inspired by statistical physics and is supposed to find a global optimum by using "enery" of states. The temperature function we used was <img src="https://bit.ly/2N0VIr0" align="center" border="0" alt="T(k) = \frac{1}{\sqrt{1+k}}" width="121" height="44" />. The value of k was changed every 10th iteration of our optimization with the following scheme: <img src="https://bit.ly/3e4as4q" align="center" border="0" alt="K =\frac{1}{10}" width="60" height="43" />.
+We now used Simulated annealing to minimize cost on a TSP problem given a cost matrix over 20 cities. Simulated Annealing is inspired by statistical physics and is supposed to find a global optimum by using "enery" of states. The temperature function we used was <img src="https://render.githubusercontent.com/render/math?math= T(k) = \frac{1}{\sqrt{1+k}}">. The value of k was changed every 10th iteration of our optimization with the following scheme: <img src="https://render.githubusercontent.com/render/math?math= K =\frac{1}{10}">.
 
 As a proof of concept we created a circle where we used our optimization scheme to find the minimum cost (distance) for the circle. The green line represent the initial (random) TSP, while the blue line is our optimized TSP:
 
