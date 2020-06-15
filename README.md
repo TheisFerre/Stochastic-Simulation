@@ -210,7 +210,9 @@ The estimator for the difference of the two systems is given by <img src="https:
 Using a 95% confidence interval we found: <img src="https://bit.ly/3e2FxFN" align="center" border="0" alt="\hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm  0.0023" width="214" height="22" />
 
 
-**Day5
+## Day5
+
+### MCMC
 
 This day we discovered the Markov Chain Monte Carlo (MCMC) method for estimating distributions.
 
@@ -218,6 +220,69 @@ First we used the following function for MCMC:
 <img src="https://bit.ly/37zbMdg" align="center" border="0" alt="P(i) = \frac{\frac{A^{i}}{i!}} {\sum_{j=0}^{N} \frac{A^{j}}{j!} }, \quad j=0 \dots N" width="219" height="65" />, letting N=10 and alpha=3.
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC1.png)
+
+Chi-squared Test: ```p-value=0.0116```
+
+
+Next we extended the function to:
+<img src="https://bit.ly/2MYWTr4" align="center" border="0" alt="P(i,j) = \frac{1}{K} \frac{A_{1}^{i}}{i!}\frac{A_{2}^{j}}{j!}, \quad 0\leq i+j \leq N" width="256" height="53" />, where the term 1/K is removed as this is a normalization constant that we will not approximate. 
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC21.png)
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC22.png)
+
+Chi-squared Test (X-values): ```pvalue=2.115e-19```
+
+Chi-squared Test (Y-values): ```pvalue=3.231e-15```
+
+### GIBBS SAMPLING
+
+We now found conditional distributions for the function given in previous simulation. The two conditional distributions were analytically found to be:
+
+<img src="https://bit.ly/2Y2aGnd" align="center" border="0" alt="P(i | j) = \frac{\frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!}}{\sum_{i=0}^{N-j} \frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!} }" width="147" height="78" />
+
+<img src="https://bit.ly/3fn8LiK" align="center" border="0" alt="P(j | i) = \frac{\frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!}}{\sum_{j=0}^{N-i} \frac{A_{1}^{i}}{i!} \frac{A_{2}^{j}}{j!} }" width="147" height="79" />
+
+```python
+alpha1 = 17
+alpha2 = 12
+n = 10
+model = MCMC_gibs(func1=p_i_given_j, func2=p_j_given_i,
+                  num_classes=n, position=(int(n/2)-1, int(n/2)-1))
+samples = model.run(num_samples=1000)
+```
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/GIBBS1.png)
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/GIBBS2.png)
+
+Chi-squared Test (X-values): ```pvalue=1.2471-86```
+
+Chi-squared Test (Y-values): ```pvalue=2.732e-53```
+
+### TSP Simulated Annealing
+
+We now used Simulated annealing to minimize cost on a TSP problem given a cost matrix over 20 cities. Simulated Annealing is inspired by statistical physics and is supposed to find a global optimum by using "enery" of states. The temperature function we used was <img src="https://bit.ly/2N0VIr0" align="center" border="0" alt="T(k) = \frac{1}{\sqrt{1+k}}" width="121" height="44" />. The value of k was changed every 10th iteration of our optimization with the following scheme: <img src="https://bit.ly/3e4as4q" align="center" border="0" alt="K =\frac{1}{10}" width="60" height="43" />.
+
+As a proof of concept we created a circle where we used our optimization scheme to find the minimum cost (distance) for the circle. The green line represent the initial (random) TSP, while the blue line is our optimized TSP:
+
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/TSP_circle.png)
+
+The optimization of the circle worked fine. We now proceed to using the cost matrix to find the global minimum for the cost of the given problem.
+
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/tsp_annealing.png)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
