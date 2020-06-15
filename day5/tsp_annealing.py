@@ -70,7 +70,7 @@ y_vals = [p[1] for p in points]
 x_vals.append(x_vals[0])
 y_vals.append(y_vals[0])
 
-plt.plot(x_vals, y_vals, c='g')
+plt.plot(x_vals, y_vals, c='g', linewidth=3.5)
 
 samples = []
 num_samples = 500
