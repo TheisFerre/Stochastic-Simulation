@@ -268,7 +268,7 @@ We now used Simulated annealing to minimize cost on a TSP problem given a cost m
 As a proof of concept we created a circle where we used our optimization scheme to find the minimum cost (distance) for the circle. The green line represent the initial (random) TSP, while the blue line is our optimized TSP:
 
 
-![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/TSP_circle.png)
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/circle_tsp.png)
 
 The optimization of the circle worked fine. We now proceed to using the cost matrix to find the global minimum for the cost of the given problem.
 
