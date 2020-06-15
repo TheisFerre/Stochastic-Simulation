@@ -1,7 +1,7 @@
-# Stochastic-Simulation
-Git Repo for course in Stochastic Simulation
+# Stochastic-Simulation Exercises
 
-## Day 1:
+
+# Day 1:
 Create a Linear Congruential Generator(LCG) to simulate random uniform numbers. Test the numbers with Chi-squared and Kolmogorov-Smirnov test.
 
 The LCG algorithm takes three inputs to (pseudo) randomly sample from a uniform distribution. Below is shown which values was used to create the uniform numbers for this assignment:
@@ -15,13 +15,13 @@ plt.hist(numbers, bins=10)
 ```
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/Histogram_expectation.png)
 
-### Test for correlation
+## Test for correlation
 ```python
 plt.scatter(numbers[:len(numbers)-1], numbers[1:])
 ```
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/Scatter_plot_corr.png)
 
-### Chi-squared Test
+## Chi-squared Test
 ```python
 Test_statistic, p_val = chi_squared(numbers, num_classes=10)
 ```
@@ -31,7 +31,7 @@ Test_statistic = 5.986
 p_val = 0.7413
 ```
 
-### Kolmogorov-Smirnov Test
+## Kolmogorov-Smirnov Test
 ```python
 Adjusted_test_statistic = kolmogorov(numbers)
 ```
@@ -40,7 +40,7 @@ Adjusted_test_statistic = 1.02
 ```
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/Kolmogorov.png)
 
-### Run-Test III
+## Run-Test III
 ```python
 Test_statistic = run_test(numbers)
 ```
@@ -48,44 +48,44 @@ Test_statistic = run_test(numbers)
 Test_statistic = 0.869
 ```
 
-## Day 2
+# Day 2
 This day we simulated both discrete and continous random variables from different distributions using the Uniform distribution.
 
-### Discrete sampling
+## Discrete sampling
 
-#### True probabilities:
+### True probabilities:
 ```python
 probabilities = np.array([7/48, 5/48, 1/8, 1/16, 1/4, 5/16])
 ```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/probs.png)
 
-#### Direct Method:
+### Direct Method:
 ```python
 direct_method(probabilities, plot=True)
 ```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/direct_sampling.png)
 
-#### Rejection Method:
+### Rejection Method:
 ```python
 rejection_method(probabilities, plot=True)
 ```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/rejection_method.png)
 
-#### Alias Method:
+### Alias Method:
 ```python
 alias_method(probabilities, plot=True)
 ```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/alias_method.png)
 
-### Continous Sampling
+## Continous Sampling
 
 In this section we sampled from continous distributions using the uniform distribution
 
-#### Exponential distribution ```exp(lambda=3)```:
+### Exponential distribution ```exp(lambda=3)```:
 
 ```python
 samples_exp = exp_dist(lambd=3, plot=True)
@@ -100,7 +100,7 @@ Exponential Test statistic = 0.65182
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/exponen.png)
 
-#### Normal Distribution ```N(mean=0, variance=1)```:
+### Normal Distribution ```N(mean=0, variance=1)```:
 
 ```python
 samples_norm = normal_dist(plot=True)
@@ -121,7 +121,7 @@ We also created 100 confidence intervals from our normal distribution using 10 s
 
 In the plot above we see that it is very noisy and that the confidence intervals are quite wide. This is due to the small sample size of 10, that leads to a lot of noise. We do however see our mean oscillate around mean 0 which is encouraging and expected.
 
-#### Pareto Distribution ```P(beta=1, k=[2.05, 4]```:
+### Pareto Distribution ```P(beta=1, k=[2.05, 4]```:
 
 We can now compare our sampled pareto values from the true analytical mean/variance:
 
@@ -138,7 +138,7 @@ analytical_var = k / ((k-1)**2 * (k-2)) * beta**2
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k4.png)
 
-## Day 3
+# Day 3
 
 This day we was supposed to simulate "Block system". This system contains ```n``` service units, mean service unit time, mean customer arrival.
 The system simulates customers that show up to a store to get a service from one of the ```n``` service units. The Service units mean availability is modelled with an exponential function. Customer arrival mean is modeled as a Poisson process.
@@ -164,7 +164,7 @@ System Dynamics:
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/confidence_blocking.png)
 
-## Day 4
+# Day 4
 
 This day we discovered various variance reduction methods. As an example we used the control variate method to reduce variance on the final blocking fraction of our blocking system from day 3.
 
@@ -210,9 +210,9 @@ The estimator for the difference of the two systems is given by <img src="https:
 Using a 95% confidence interval we found: <img src="https://render.githubusercontent.com/render/math?math=\hat{\theta}_{2} - \hat{\theta}_{1}=0.117 \pm  0.0023">
 
 
-## Day5
+# Day5
 
-### MCMC
+## MCMC
 
 This day we discovered the Markov Chain Monte Carlo (MCMC) method for estimating distributions.
 
@@ -235,7 +235,7 @@ Chi-squared Test (X-values): ```pvalue=2.115e-19```
 
 Chi-squared Test (Y-values): ```pvalue=3.231e-15```
 
-### GIBBS SAMPLING
+## GIBBS SAMPLING
 
 We now found conditional distributions for the function given in previous simulation. The two conditional distributions were analytically found to be:
 
@@ -261,7 +261,7 @@ Chi-squared Test (X-values): ```pvalue=1.2471-86```
 
 Chi-squared Test (Y-values): ```pvalue=2.732e-53```
 
-### TSP Simulated Annealing
+## TSP Simulated Annealing
 
 We now used Simulated annealing to minimize cost on a TSP problem given a cost matrix over 20 cities. Simulated Annealing is inspired by statistical physics and is supposed to find a global optimum by using "enery" of states. The temperature function we used was <img src="https://render.githubusercontent.com/render/math?math=T(k) = \frac{1}{\sqrt{1+k}}">. The value of k was changed every 10th iteration of our optimization with the following scheme: <img src="https://render.githubusercontent.com/render/math?math=K =\frac{1}{10}">.
 
@@ -275,14 +275,95 @@ The optimization of the circle worked fine. We now proceed to using the cost mat
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/tsp_annealing.png)
 
 
+# Day 6
+
+This day we used bootstrapping to estimate mean/median/variance of randomly distributed variables.
+
+## Exercise 1
+```python
+n = 10
+X = [56, 101, 78, 67, 93, 87, 64, 72, 80, 69]
+a = -5
+b = 5
+
+p_list = []
 
 
+def func1(n=10, X=X, a=a, b=b):
+
+    bootstrap_vals = np.random.choice(X, n)
+    x_sum = 0
+    for i in range(n):
+        x_sum += bootstrap_vals[i]/n
+
+    x_sum = x_sum - np.mean(X)
+
+    if a < x_sum and x_sum < b:
+        return 1
+    else:
+        return 0
 
 
+p_vals = []
+for i in range(100):
+    p_vals.append(func1())
+
+print('Exercise 1')
+print(np.mean(p_vals))
+```
+
+## Exercise 2
+
+```python
+def var(X, mean):
+
+    sum_var = 0
+
+    for i in range(len(X)):
+        sum_var += (X[i] - mean)**2
+
+    return sum_var/(len(X)-1)
 
 
+X = [5, 4, 9, 6, 21, 17, 11, 20, 7, 10, 21, 15, 13, 16, 8]
+
+var_list = []
+for i in range(100):
+
+    pick = np.random.choice(X, size=15)
+
+    var_list.append(var(pick, np.mean(X)))
+
+print('Exercise 2')
+print(np.var(var_list))
+```
+
+## Exercise 3
+
+```python
+def get_samples(num_samples):
+    samples = stats.pareto.rvs(1.05, size=num_samples)
+
+    return samples
 
 
+mean_list = []
+median_list = []
+for i in range(100):
+    samples = get_samples(200)
+
+    mean_list.append(np.mean(samples))
+    median_list.append(np.median(samples))
+
+print('Exercise 3')
+print('mean (mean/var')
+print(np.mean(mean_list))
+print(np.var(mean_list))
+
+print('median (mean/var')
+print(np.mean(median_list))
+print(np.var(median_list))
+```
 
 
 
