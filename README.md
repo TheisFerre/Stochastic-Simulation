@@ -203,7 +203,7 @@ system_exp = BlockSystem(
 )
 ```
 
-$\hat{\theta}}$
+$\hat{\theta}$
 
 The estimator 
 
