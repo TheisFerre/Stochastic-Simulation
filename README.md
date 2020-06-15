@@ -164,6 +164,48 @@ System Dynamics:
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/confidence_blocking.png)
 
+## Day 4
+
+This day we discovered various variance reduction methods. As an example we used the control variate method to reduce variance on the final blocking fraction of our blocking system from day 3.
+
+We found that the original variance was ```1.07e-05``` but after variance reduction it was reduced to ```4.831```
+
+Additionally, we used the  Common Random method for two different simulations of our blocking system. Here we used the two following simulations:
+
+```python
+## SIMULATION 1
+# Hyper Exponential Arrival times
+
+num_service_units_hyper = 10
+mean_service_time_hyper = 1
+mean_customer_arrival_hyper = [(0.8, 0.8333), (0.2, 5)]
+
+system_hyper = BlockSystem(
+    num_service_units=num_service_units_hyper,
+    mean_service_time=mean_service_time_hyper,
+    mean_customer_arrival=mean_customer_arrival_hyper,
+    customer_arrival_dist='hyperexp',
+    service_time_dist='expon'
+)
+
+## SIMULATION 2
+# Exponential Arrival times
+num_service_units_exp = 10
+mean_service_time_exp = 8
+mean_customer_arrival_exp = 1
+
+system_exp = BlockSystem(
+    num_service_units=num_service_units_exp,
+    mean_service_time=mean_service_time_exp,
+    mean_customer_arrival=mean_customer_arrival_exp,
+    customer_arrival_dist='expon',  # expon/erlang/hyperexp
+    service_time_dist='expon'  # expon/pareto
+)
+```
+
+$\hat{\theta}}$
+
+The estimator 
 
 
 
