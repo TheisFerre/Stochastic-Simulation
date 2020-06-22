@@ -2,6 +2,7 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+from scipy import stats
 
 plt.style.use('ggplot')
 
@@ -129,11 +130,31 @@ plt.bar(list(range(1, len(probs) + 1)), probs)
 plt.title('Probabilites')
 plt.show()
 
+num_samples = 10000
+
 # Direct method
-direct_method(probs, plot=True)
+samples_direct = direct_method(probs, samples=num_samples, plot=True)
+frequencies_direct = np.bincount(samples_direct)[1:]
+
+chisq_direct, pval_direct = stats.chisquare(
+    frequencies_direct, probs*num_samples)
+print(f'Direct Test statistic {chisq_direct}')
+print(f'Direct pval {pval_direct}')
 
 # Rejection method
-rejection_method(probs, plot=True)
+samples_reject = rejection_method(probs, sample_values=num_samples, plot=True)
+frequencies_reject = np.bincount(samples_reject)[1:]
+
+chisq_reject, pval_reject = stats.chisquare(
+    frequencies_reject, probs*num_samples)
+print(f'Reject Test statistic {chisq_reject}')
+print(f'Reject pval {pval_reject}')
+
 
 # Alias method
-alias_method(probs, plot=True)
+samples_alias = alias_method(probs, num_samples=num_samples, plot=True)
+frequencies_alias = np.bincount(samples_alias)[1:]
+
+chisq_alias, pval_alias = stats.chisquare(frequencies_alias, probs*num_samples)
+print(f'Alias Test statistic {chisq_alias}')
+print(f'Alias pval {pval_alias}')
