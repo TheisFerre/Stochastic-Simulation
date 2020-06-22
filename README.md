@@ -44,6 +44,8 @@ As the Adjusted test statistic for the kolmogorov test is below the 0.950 critic
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/kolmogorov_suprema.png)
 
+The green line in indicates where the suprema between the analytical and empirical distribution is found.
+
 ## Run-Test III
 ```python
 Test_statistic = run_test(numbers)
