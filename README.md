@@ -437,7 +437,7 @@ As a proof of concept we created a circle where we used our optimization scheme 
 
 The optimization of the circle worked fine. We now proceed to using the cost matrix to find the global minimum for the cost of the given problem.
 
-![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/tsp_annealing.png)
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/TSP_end_cost.png)
 
 For the tsp with a given cost-matrix we repeated the simulation 10 times to compute a 95% confidence interval for the end-cost. For the 10 simulations we found the 95% confidence intervals to be ```0.8875 +- 0.0345```.
 
