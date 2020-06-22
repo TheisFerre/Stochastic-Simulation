@@ -3,6 +3,7 @@ import numpy as np
 import math
 import random
 import matplotlib.pyplot as plt
+from scipy import stats
 
 # EX1
 
@@ -180,3 +181,51 @@ plt.plot(cost_list)
 plt.title(f'start cost: {cost_start}, end cost: {cost_end}')
 plt.ylabel('cost')
 plt.show()
+
+
+# 10 simulations to create confidence interval on end-cost:
+
+repeats = 10
+num_samples = 50000
+
+stations = np.array(list(range(len(costs))))
+
+np.random.shuffle(stations)
+
+end_cost = []
+for _ in range(repeats):
+    cost_list = []
+    for i in range(num_samples):
+
+        y = permute_points(stations)
+
+        if i % 10 == 0:
+            k = (i+1)/10
+
+        if energy_cost(y, costs) < energy_cost(stations, costs):
+            stations = y
+
+        else:
+
+            fy = func2(y, k, costs)
+            fx = func2(stations, k, costs)
+
+            accept_prob = min(1, fy / fx)
+
+            rand1 = random.random()
+
+            if rand1 < accept_prob:
+                stations = y
+
+        samples.append(stations)
+
+        cost_list.append(round(energy_cost(stations, cost_mat=costs), 3))
+
+    end_cost.append(cost_list[-1])
+
+
+end_cost = np.array(end_cost)
+
+CI = end_cost.std()/math.sqrt(repeats) * stats.t.ppf(0.05/2, repeats-1)
+
+print(f'End Cost mean: {end_cost.mean()} +- {CI}')
