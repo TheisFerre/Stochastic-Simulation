@@ -38,9 +38,10 @@ p_val = 0.7413
 test_statistic, p_val = kolmogorov(numbers)
 ```
 ```
-test_statistic = 0.011
-p_val = 1.0
+adjusted_test_statistic = 1.0206
 ```
+As the Adjusted test statistic for the kolmogorov test is below the 0.950 critical value of 1.358 we can not reject the null hypothesis.
+
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/kolmogorov_suprema.png)
 
 ## Run-Test III
@@ -50,6 +51,7 @@ Test_statistic = run_test(numbers)
 ```
 Test_statistic = 0.869
 ```
+As the 95% critical value for the normal distribution with mean 0 and variance 1 is 1.64, we can not reject the null hypothesis as the test statistic is below the critical value.
 
 ## Correlation Test
 ```python
@@ -94,8 +96,9 @@ Direct pval 0.27056154910938
 rejection_method(probabilities, plot=True)
 ```
 
-Reject Test statistic 2.281851428571435
-Reject pval 0.8089286857415394
+Reject Test statistic: ```2.281851428571435```
+
+Reject pval ```0.8089286857415394```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/rejection_method.png)
 
@@ -104,8 +107,9 @@ Reject pval 0.8089286857415394
 alias_method(probabilities, plot=True)
 ```
 
-Alias Test statistic 11.054102857142869
-Alias pval 0.05031777275909331
+Alias Test statistic ```11.054102857142869```
+
+Alias pval ```0.05031777275909331```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/alias_method.png)
 
@@ -114,7 +118,7 @@ Alias pval 0.05031777275909331
 
 In this section we sampled from continous distributions using the uniform distribution
 
-### Exponential distribution ```exp(lambda=3)```:
+### Exponential distribution lambda=3:
 
 ```python
 samples_exp = exp_dist(lambd=3, plot=True)
@@ -164,26 +168,34 @@ analytical_var = k / ((k-1)**2 * (k-2)) * beta**2
 ```
 
 For k=2.05
-Absolute difference emp. vs analytical mean: 0.021863888940972798
-Absolute difference emp. vs analytical variance: 33.35985467497491
+
+Absolute difference emp. vs analytical mean: ```0.02186```
+
+Absolute difference emp. vs analytical variance: ```33.3599```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k205.png)
 
 For k=2.5
-Absolute difference emp. vs analytical mean: 0.006857261472374532
-Absolute difference emp. vs analytical variance: 0.5387019154400248
+
+Absolute difference emp. vs analytical mean: ```0.00686```
+
+Absolute difference emp. vs analytical variance: ```0.5387```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k2.png)
 
 For k=3
-Absolute difference emp. vs analytical mean: 0.005047359094471071
-Absolute difference emp. vs analytical variance: 0.06619323264915744
+
+Absolute difference emp. vs analytical mean: ```0.00505```
+
+Absolute difference emp. vs analytical variance: ```0.0662```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k3.png)
 
 For k=4
-Absolute difference emp. vs analytical mean: 0.008493167016244918
-Absolute difference emp. vs analytical variance: 0.04414582806290698
+
+Absolute difference emp. vs analytical mean: ```0.00845```
+
+Absolute difference emp. vs analytical variance: ```0.04415```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k4.png)
 
@@ -445,7 +457,7 @@ print('Exercise 1')
 print(np.mean(p_vals))
 ```
 
-The mean was found to be 0.75
+The mean was found to be ```0.75```
 
 ## Exercise 2
 
@@ -473,7 +485,7 @@ print('Exercise 2')
 print(np.var(var_list))
 ```
 
-The variance was found to be 70.42154553061226
+The variance was found to be ```70.422```
 
 ## Exercise 3
 
@@ -502,9 +514,9 @@ print(np.mean(median_list))
 print(np.var(median_list))
 ```
 
-The mean and variance of the mean was found to be 8.193680703101927 and 45.47725535930789, respectively.
+The mean and variance of the mean was found to be ```8.194``` and ```45.477```, respectively.
 
-The mean and variance of the median was found to be 1.9334320084469665 and 0.01659788988797464, respectively.
+The mean and variance of the median was found to be ```1.933``` and ```0.0166```, respectively.
 
 
 

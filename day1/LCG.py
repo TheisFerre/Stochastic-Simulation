@@ -112,10 +112,8 @@ def kolmogorov(rand_numbers, granularity=1000, plot=False):
     max_diff_idx = np.argmax(diff)
     max_diff = diff[max_diff_idx]
 
-    test_stat, p_val = stats.ks_2samp(Fn_x, f_x)
-
-    # test_stat = np.sqrt(len(rand_numbers) + 0.12 + 0.11 /
-    #                    np.sqrt(len(rand_numbers))) * max_diff
+    test_stat = np.sqrt(len(rand_numbers) + 0.12 + 0.11 *
+                        np.sqrt(len(rand_numbers))) * max_diff
 
     if plot:
         plt.plot(f_x, c='b', label='Empirical CDF')
@@ -131,7 +129,11 @@ def kolmogorov(rand_numbers, granularity=1000, plot=False):
         plt.title('LCG: Empirical vs. Analytical CDF Kolmogorov')
         plt.show()
 
-    return test_stat, p_val
+    return test_stat
+
+
+def run_test1(rand_numbers):
+    pass
 
 
 def run_test(rand_numbers):
@@ -185,14 +187,15 @@ chi_sq_stat, chi_sq_pval = chi_squared(rand_numbers, num_classes=10)
 print(f'Chi Squared Test Statistics: {chi_sq_stat}')
 print(f'Chi Squared P-value: {chi_sq_pval}')
 
-ks_stat, ks_pval = kolmogorov(rand_numbers, plot=True)
+ks_stat = kolmogorov(rand_numbers, plot=True)
 
 print(f'Kolmogorov-smirnov Test Statistics: {round(ks_stat, 6)}')
-print(f'Kolmogorov-smirnov p-value: {round(ks_pval, 6)}')
 
 
 run_test_stat = run_test(rand_numbers)
 print(f'Run Test III Test Statistic: {run_test_stat}')
+
+print(f'N(0, 1) 95% critical value: {stats.norm.ppf(0.95)}')
 
 corr_test = correlation_test(rand_numbers, 5)
 print(f'Correlation test using h=5: {corr_test}')
@@ -220,10 +223,9 @@ chi_sq_stat, chi_sq_pval = chi_squared(rand_numbers_python, num_classes=10)
 print(f'Chi Squared Test Statistics: {chi_sq_stat}')
 print(f'Chi Squared P-value: {chi_sq_pval}')
 
-ks_stat, ks_pval = kolmogorov(rand_numbers_python, plot=True)
+ks_stat = kolmogorov(rand_numbers_python, plot=True)
 
 print(f'Kolmogorov-smirnov Test Statistics: {round(ks_stat, 6)}')
-print(f'Kolmogorov-smirnov p-value: {round(ks_pval, 6)}')
 
 run_test_stat = run_test(rand_numbers_python)
 print(f'Run Test III Test Statistic: {run_test_stat}')
