@@ -311,7 +311,7 @@ System Dynamics:
 
 95% Confidence interval on fraction blocked/serviced
 
-[![](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/hyper_pareto_conf.png)](#)
+![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/hyper_pareto_conf.png)
 
 # Day 4
 (EXERCISE 5)
@@ -354,6 +354,7 @@ Confidence Interval: 1.7155+--0.00259
 finish time: 0.004197359085083008
 ```
 
+In general all the methods closely estimate the true value of the integral. It should however be noted that there is significant finishing times.
 
 This day we discovered various variance reduction methods. As an example we used the control variate method to reduce variance on the final blocking fraction of our blocking system from day 3.
 
