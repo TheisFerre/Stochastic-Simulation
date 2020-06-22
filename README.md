@@ -41,7 +41,7 @@ test_statistic, p_val = kolmogorov(numbers)
 ```
 adjusted_test_statistic = 1.0206
 ```
-As the Adjusted test statistic for the kolmogorov test is below the 0.950 critical value of 1.358 we can not reject the null hypothesis.
+As the Adjusted test statistic for the kolmogorov test is below the 95% critical value of 1.358 we can not reject the null hypothesis.
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day1/kolmogorov_suprema.png)
 
@@ -354,7 +354,7 @@ Confidence Interval: 1.7155+--0.00259
 finish time: 0.004197359085083008
 ```
 
-In general all the methods closely estimate the true value of the integral. It should however be noted that there is significant finishing times.
+In general all the methods closely estimate the true value of the integral. It should however be noted that there is significant difference in finishing times.
 
 This day we discovered various variance reduction methods. As an example we used the control variate method to reduce variance on the final blocking fraction of our blocking system from day 3.
 
@@ -448,8 +448,8 @@ Similarly to the MCMC runs above, we use a proposal distribution where we random
 
 
 ```python
-alpha1 = 17
-alpha2 = 12
+alpha1 = 4
+alpha2 = 4
 n = 10
 model = MCMC_gibs(func1=p_i_given_j, func2=p_j_given_i,
                   num_classes=n, position=(int(n/2)-1, int(n/2)-1))
@@ -489,9 +489,10 @@ For the tsp with a given cost-matrix we repeated the simulation 10 times to comp
 # Day 6
 **(EXERCISE 8)**
 
-This day we used bootstrapping to estimate mean/median/variance of randomly distributed variables. Please note that this is exercise 8.
+This day we used bootstrapping to estimate mean/median/variance of randomly distributed variables. 
 
 ## Exercise 1
+Bootstrap approach to estimate p by constructing random resamples of X_i, ..., X_n.
 ```python
 n = 10
 X = [56, 101, 78, 67, 93, 87, 64, 72, 80, 69]
