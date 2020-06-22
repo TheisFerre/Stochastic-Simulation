@@ -86,8 +86,6 @@ We found that the p-value was varying a lot even though we set the constraint of
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/geometric.png)
 
-This day we simulated both discrete and continous random variables from different distributions using the Uniform distribution.
-
 ## Discrete sampling
 
 ### True probabilities:
