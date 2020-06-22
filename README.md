@@ -228,7 +228,7 @@ Absolute difference emp. vs analytical variance: ```0.04415```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k4.png)
 
-We note that the variance when ```k=2.05``` is greater than for other k-values. This comes from the fact that a k value close to 2 will be very sensitive to small changes in the sampled value.
+We note that the variance when ```k=2.05``` is greater than for other k-values. This comes from the fact that a k value close to 2 will be very sensitive to small changes in the sampled value. This result can also be interpreted from the equations in slide 13 in slideshow ***Sampling from Continuous Distributions***
 
 # Day 3
 (EXERCISE 4)
@@ -311,7 +311,7 @@ System Dynamics:
 
 95% Confidence interval on fraction blocked/serviced
 
-![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/hyper_pareto_conf.png)
+[![](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day3/hyper_pareto_conf.png)](#)
 
 # Day 4
 (EXERCISE 5)
