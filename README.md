@@ -462,9 +462,12 @@ samples = model.run(num_samples=1000)
 
 Chi-squared Test (X-values): ```pvalue=1.2471-86```
 
+(Reject null hypothesis using 5% significance level)
+
 Chi-squared Test (Y-values): ```pvalue=2.732e-53```
 
-We note that the p-values above are significant under the assumption of a 5% significance level.
+(Reject null hypothesis using 5% significance level)
+
 
 ## TSP Simulated Annealing
 **(EXERCISE 7)**
