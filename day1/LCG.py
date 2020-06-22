@@ -150,9 +150,12 @@ def run_test2(rand_numbers):
     run_counter = -1
     last_val = -1
     while idx < len(rand_numbers):
-        if rand_numbers[idx] > last_val:
+        # print(run_counter)
+        if rand_numbers[idx] >= last_val:
             run_counter += 1
             last_val = rand_numbers[idx]
+
+            idx += 1
 
         else:
             if run_counter >= 5:
@@ -163,9 +166,10 @@ def run_test2(rand_numbers):
             last_val = -1
             run_counter = -1
 
-        idx += 1
-
-    print(run_vector)
+    if run_counter >= 5:
+        run_vector[5] = run_vector[5] + 1
+    else:
+        run_vector[run_counter] = run_vector[run_counter] + 1
 
     n = len(rand_numbers)
 
@@ -178,6 +182,12 @@ def run_test2(rand_numbers):
     Z = 1/(n-6) * step2
 
     return Z
+
+
+"""vals = [0.54, 0.67, 0.13, 0.89, 0.33, 0.45,
+        0.90, 0.01, 0.45, 0.76, 0.82, 0.24, 0.17]
+
+print(run_test2(vals))"""
 
 
 def run_test(rand_numbers):

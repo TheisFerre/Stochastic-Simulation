@@ -17,7 +17,10 @@ bins_counts = np.bincount(samples)[1:]
 pmf_arr = np.array([stats.geom.pmf(i+1, p)
                     for i in range(len(bins_counts))]) * num_samples
 
-print(pmf_arr)
-print(bins_counts)
+exp_list = list(filter(lambda x: x >= 5, pmf_arr))
+
+print(exp_list)
+
+bins_count = bins_counts[:len(exp_list)]
 
 print(stats.chisquare(bins_counts, pmf_arr))
