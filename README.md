@@ -96,8 +96,9 @@ probabilities = np.array([7/48, 5/48, 1/8, 1/16, 1/4, 5/16])
 direct_method(probabilities, plot=True)
 ```
 
-Direct Test statistic 6.38473142857142
-Direct pval 0.27056154910938
+Direct Test statistic: ```6.3847```
+
+Direct pval: ```0.27056```
 
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/direct_sampling.png)
@@ -107,9 +108,9 @@ Direct pval 0.27056154910938
 rejection_method(probabilities, plot=True)
 ```
 
-Reject Test statistic: ```2.281851428571435```
+Reject Test statistic: ```2.2819```
 
-Reject pval ```0.8089286857415394```
+Reject pval: ```0.80893```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/rejection_method.png)
 
@@ -118,9 +119,9 @@ Reject pval ```0.8089286857415394```
 alias_method(probabilities, plot=True)
 ```
 
-Alias Test statistic ```11.054102857142869```
+Alias Test statistic: ```11.0541```
 
-Alias pval ```0.05031777275909331```
+Alias pval: ```0.05032```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/alias_method.png)
 
