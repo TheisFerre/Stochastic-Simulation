@@ -213,6 +213,8 @@ Absolute difference emp. vs analytical variance: ```0.04415```
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day2/pareto_k4.png)
 
+We note that the variance when ```k=2.05``` is greater than for other k-values. This comes from the fact that a k value close to 2 will be very sensitive to small changes in the sampled value.
+
 # Day 3
 (EXERCISE 4)
 
@@ -299,16 +301,21 @@ System Dynamics:
 # Day 4
 (EXERCISE 5)
 
+In the following section we estimate the integral provided in the exercise.
+
 True Evaluation of integral: 1.718281828459045
+## Monte Carlo estimation
+(Refer to slide 3 in slideshow ***Variance Reduction Methods***)
 ```
-Monte Carlo estimation
 Estimation: 1.7833804485341442
 Confidence Interval: 1.7833804485341442+--0.08096302052162872
 finish time: 0.0014660358428955078
 ```
 
+
+## Anithetic Variables estimation
+(Refer to slide 3 in slideshow ***Variance Reduction Methods***)
 ```
-Anithetic Variables estimation
 Estimation: 1.7149615929023805
 Confidence Interval: 1.7149615929023805+--0.01029981830681711
 finish time: 0.00046825408935546875
@@ -424,6 +431,8 @@ samples = model.run(num_samples=1000)
 Chi-squared Test (X-values): ```pvalue=1.2471-86```
 
 Chi-squared Test (Y-values): ```pvalue=2.732e-53```
+
+We note that the p-values above are significant under the assumption of a 5% significance level.
 
 ## TSP Simulated Annealing
 (EXERCISE 7)
