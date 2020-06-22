@@ -404,7 +404,7 @@ Using a 95% confidence interval we found: <img src="https://render.githubusercon
 This day we discovered the Markov Chain Monte Carlo (MCMC) method for estimating distributions.
 
 First we used the following function for MCMC:
-<img src="https://render.githubusercontent.com/render/math?math=P(i) = \frac{\frac{A^{i}}{i!}} {\sum_{j=0}^{N} \frac{A^{j}}{j!} }, \quad j=0 \dots N">, letting N=10 and alpha=3.
+<img src="https://render.githubusercontent.com/render/math?math=P(i) = \frac{\frac{A^{i}}{i!}} {\sum_{j=0}^{N} \frac{A^{j}}{j!} }, \quad j=0 \dots N">, letting N=10 and A=8.
 
 The proposal distribution was a random walk in the discrete space, where there was a 50% chance of increasing or decreasing our newly proposed position by 1.
 
@@ -417,6 +417,8 @@ Next we extended the function to:
 <img src="https://render.githubusercontent.com/render/math?math=P(i,j) = \frac{1}{K} \frac{A_{1}^{i}}{i!}\frac{A_{2}^{j}}{j!}, \quad 0\leq i+j \leq N">, where the term 1/K is removed as this is a normalization constant that we will not approximate. 
 
 The proposal distribution was a random walk in the discrete space, where there was a 50% chance of increasing or decreasing our newly proposed position by 1. This was done in both directions while staying within the constraints.
+
+Using A1=4 and A2=4 we get the following:
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC_2_var.png)
 

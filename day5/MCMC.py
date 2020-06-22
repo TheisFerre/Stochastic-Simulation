@@ -86,7 +86,7 @@ n = 10
 # EX 1
 
 
-def func1(x, alpha=3, n=10):
+def func1(x, alpha=8, n=10):
 
     nominator = alpha**x / math.factorial(x)
 
@@ -126,14 +126,17 @@ def count_samples(samples):
 
 model = MCMC(func=func1, draw_func=draw_func1, position=5)
 
-samples = model.run(100)
+samples = model.run(1000)
 
 sample_hist = count_samples(samples)
 print('CHI SQUARED EXERCISE 1')
 print(chisquare(f_obs=sample_hist))
 
-plt.hist(samples, rwidth=0.85)
-plt.title('MCMC 1-variable')
+bins = np.bincount(samples)[1:]
+print(bins)
+
+plt.bar(list(range(1, len(bins)+1)), bins)
+plt.title('MCMC 1-variable, A=8')
 plt.show()
 
 
@@ -185,7 +188,7 @@ plt.title('MCMC 2-variables')
 plt.show()
 
 
-barWidth = 0.25
+"""barWidth = 0.25
 
 x_bins = np.bincount(x_vals)
 y_bins = np.bincount(y_vals)
@@ -196,15 +199,44 @@ r2 = [x + barWidth for x in r1]
 plt.bar(r1, x_bins, width=barWidth)
 plt.bar(r2, y_bins, width=barWidth)
 plt.title('MCMC(X,Y)-variables alpha1=4, alpha2=4')
+plt.show()"""
+
+
+c_x = Counter()
+c_y = Counter()
+
+for i in range(len(x_vals)):
+    c_x[x_vals[i]] += 1
+    c_y[y_vals[i]] += 1
+
+
+x_list = [0] * n
+y_list = [0] * n
+for i in range(n):
+    x_list[i] = c_x[i]
+    y_list[i] = c_y[i]
+
+print(x_list)
+print(y_list)
+
+
+barWidth = 0.25
+
+r1 = np.arange(len(x_list))
+r2 = [x + barWidth for x in r1]
+
+plt.bar(r1, x_list, width=barWidth)
+plt.bar(r2, y_list, width=barWidth)
+plt.title('MCMC(X,Y)-variables alpha1=4, alpha2=4')
 plt.show()
 
 
 # EX3
 
 
-alpha1 = 17
-alpha2 = 12
-n = 40
+alpha1 = 4
+alpha2 = 4
+n = 10
 
 # Marginalize functions
 
@@ -251,23 +283,64 @@ class MCMC_gibs():
 
         if self.start_cond == 0:
 
+            self.start_cond = 1
+
             j = self.position[1]
 
-            probs = [self.p_i_given_j(i, j) for i in range(self.num_classes-j)]
-            int_choice = np.random.choice(list(range(len(probs))), p=probs)
+            rand = random.random()
+            rand2 = random.random()
 
-            self.position = (int_choice, self.position[1])
-            self.start_cond = 1
+            if rand > 0.5:
+                p = self.p_i_given_j(self.position[0] + 1, j)
+
+                # Check if we can go there
+                if (self.position[0] + 1 + j) < self.num_classes:
+                    if p > rand2:
+                        self.position = (self.position[0]+1, j)
+
+            else:
+                p = self.p_i_given_j(self.position[0] - 1, j)
+
+                # Check if we can go there
+                if (self.position[0] - 1 + j) < self.num_classes:
+                    if p > rand2:
+                        self.position = (self.position[0]-1, j)
+            print(p)
+
+            #probs = [self.p_i_given_j(i, j) for i in range(self.num_classes-j)]
+            #int_choice = np.random.choice(list(range(len(probs))), p=probs)
+
+            #self.position = (int_choice, self.position[1])
 
         else:
 
             i = self.position[0]
 
-            probs = [self.p_j_given_i(i, j) for j in range(self.num_classes-i)]
-            int_choice = np.random.choice(list(range(len(probs))), p=probs)
-
-            self.position = (self.position[0], int_choice)
             self.start_cond = 0
+
+            rand = random.random()
+            rand2 = random.random()
+
+            if rand > 0.5:
+                p = self.p_j_given_i(i, self.position[1] + 1)
+
+                # Check if we can go there
+                if (self.position[1] + 1 + i) < self.num_classes:
+                    if p > rand2:
+                        self.position = (i, self.position[1] + 1)
+
+            else:
+                p = self.p_j_given_i(i, self.position[1] - 1)
+
+                # Check if we can go there
+                if (self.position[1] - 1 + i) < self.num_classes:
+                    if p > rand2:
+                        self.position = (i, self.position[1]-1)
+
+            #probs = [self.p_j_given_i(i, j) for j in range(self.num_classes-i)]
+            #int_choice = np.random.choice(list(range(len(probs))), p=probs)
+
+            #self.position = (self.position[0], int_choice)
 
         return self.position
 
@@ -281,15 +354,18 @@ class MCMC_gibs():
                 samples.append(self.sample())
                 continue
 
-            sample = self.sample()
-            samples.append(sample)
+            try:
+                sample = self.sample()
+                samples.append(sample)
+            except:
+                pass
 
         return samples
 
 
 model = MCMC_gibs(func1=p_i_given_j, func2=p_j_given_i,
-                  num_classes=n, position=(int(n/2)-1, int(n/2)-1))
-samples = model.run(num_samples=1000)
+                  num_classes=n, position=(4, 4))
+samples = model.run(num_samples=10000)
 
 x_vals = [tup[0] for tup in samples]
 y_vals = [tup[1] for tup in samples]
@@ -331,5 +407,5 @@ r2 = [x + barWidth for x in r1]
 
 plt.bar(r1, x_list, width=barWidth)
 plt.bar(r2, y_list, width=barWidth)
-plt.title('GIBBS(X,Y)-variables alpha1=17, alpha2=12')
+plt.title('GIBBS(X,Y)-variables alpha1=4, alpha2=4')
 plt.show()
