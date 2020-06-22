@@ -414,6 +414,8 @@ The proposal distribution was a random walk in the discrete space, where there w
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC_1_var.png)
 
+**NOTE** In the MCMC and Gibbs sampling exercises our ChiSquared tests are not correct as we did not use the correct expected frequencies.
+
 Chi-squared Test: ```p-value=0.0116```
 
 (Reject null hypothesis using 5% significance level)
