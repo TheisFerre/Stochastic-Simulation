@@ -3,7 +3,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import chisquare
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 
 class MCMC():
@@ -132,7 +132,7 @@ sample_hist = count_samples(samples)
 print('CHI SQUARED EXERCISE 1')
 print(chisquare(f_obs=sample_hist))
 
-plt.plot(samples)
+plt.hist(samples, rwidth=0.85)
 plt.title('MCMC 1-variable')
 plt.show()
 
@@ -185,9 +185,17 @@ plt.title('MCMC 2-variables')
 plt.show()
 
 
-plt.plot(x_vals)
-plt.plot(y_vals)
-plt.title('(X,Y) trajectory')
+barWidth = 0.25
+
+x_bins = np.bincount(x_vals)
+y_bins = np.bincount(y_vals)
+
+r1 = np.arange(len(x_bins))
+r2 = [x + barWidth for x in r1]
+
+plt.bar(r1, x_bins, width=barWidth)
+plt.bar(r2, y_bins, width=barWidth)
+plt.title('MCMC(X,Y)-variables alpha1=4, alpha2=4')
 plt.show()
 
 
@@ -196,7 +204,7 @@ plt.show()
 
 alpha1 = 17
 alpha2 = 12
-n = 10
+n = 40
 
 # Marginalize functions
 
@@ -298,8 +306,30 @@ plt.plot(x_vals, y_vals)
 plt.title(f'Gibbs Sampling, {n}-classes, ({alpha1},{alpha2})-Alpha values')
 plt.show()
 
+c_x = Counter()
+c_y = Counter()
 
-plt.plot(x_vals)
-plt.plot(y_vals)
-plt.title('(X,Y) trajectory')
+for i in range(len(x_vals)):
+    c_x[x_vals[i]] += 1
+    c_y[y_vals[i]] += 1
+
+
+x_list = [0] * n
+y_list = [0] * n
+for i in range(n):
+    x_list[i] = c_x[i]
+    y_list[i] = c_y[i]
+
+print(x_list)
+print(y_list)
+
+
+barWidth = 0.25
+
+r1 = np.arange(len(x_list))
+r2 = [x + barWidth for x in r1]
+
+plt.bar(r1, x_list, width=barWidth)
+plt.bar(r2, y_list, width=barWidth)
+plt.title('GIBBS(X,Y)-variables alpha1=17, alpha2=12')
 plt.show()
