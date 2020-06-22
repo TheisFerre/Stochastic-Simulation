@@ -46,6 +46,15 @@ As the Adjusted test statistic for the kolmogorov test is below the 0.950 critic
 
 The green line in indicates where the suprema between the analytical and empirical distribution is found.
 
+## Run-Test II
+```python
+Test_statistic = run_test2(numbers)
+```
+```
+Test_statistic = 6166785.07
+```
+The Test statistic is above the 95% critical value of 1.6353 which is found from the Chi-squared distribution. Therefore we reject the null hypothesis.
+
 ## Run-Test III
 ```python
 Test_statistic = run_test(numbers)
@@ -364,11 +373,14 @@ Using a 95% confidence interval we found: <img src="https://render.githubusercon
 # Day5
 
 ## MCMC
+(EXERCISE 6)
 
 This day we discovered the Markov Chain Monte Carlo (MCMC) method for estimating distributions.
 
 First we used the following function for MCMC:
 <img src="https://render.githubusercontent.com/render/math?math=P(i) = \frac{\frac{A^{i}}{i!}} {\sum_{j=0}^{N} \frac{A^{j}}{j!} }, \quad j=0 \dots N">, letting N=10 and alpha=3.
+
+The proposal distribution was a random walk in the discrete space, where there was a 50% chance of increasing or decreasing our newly proposed position by 1.
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC_1_var.png)
 
@@ -377,6 +389,8 @@ Chi-squared Test: ```p-value=0.0116```
 
 Next we extended the function to:
 <img src="https://render.githubusercontent.com/render/math?math=P(i,j) = \frac{1}{K} \frac{A_{1}^{i}}{i!}\frac{A_{2}^{j}}{j!}, \quad 0\leq i+j \leq N">, where the term 1/K is removed as this is a normalization constant that we will not approximate. 
+
+The proposal distribution was a random walk in the discrete space, where there was a 50% chance of increasing or decreasing our newly proposed position by 1. This was done in both directions while staying within the constraints.
 
 ![Screenshot](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/day5/MCMC_2_var.png)
 
@@ -409,6 +423,7 @@ Chi-squared Test (X-values): ```pvalue=1.2471-86```
 Chi-squared Test (Y-values): ```pvalue=2.732e-53```
 
 ## TSP Simulated Annealing
+(EXERCISE 7)
 
 We now used Simulated annealing to minimize cost on a TSP problem given a cost matrix over 20 cities. Simulated Annealing is inspired by statistical physics and is supposed to find a global optimum by using "enery" of states. The temperature function we used was <img src="https://render.githubusercontent.com/render/math?math=T(k) = \frac{1}{\sqrt{1+k}}">. The value of k was changed every 10th iteration of our optimization with the following scheme: <img src="https://render.githubusercontent.com/render/math?math=K =\frac{1}{10}">.
 
@@ -423,6 +438,7 @@ The optimization of the circle worked fine. We now proceed to using the cost mat
 
 
 # Day 6
+(EXERCISE 8)
 
 This day we used bootstrapping to estimate mean/median/variance of randomly distributed variables. Please note that this is exercise 8.
 

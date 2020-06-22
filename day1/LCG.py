@@ -132,8 +132,52 @@ def kolmogorov(rand_numbers, granularity=1000, plot=False):
     return test_stat
 
 
-def run_test1(rand_numbers):
-    pass
+def run_test2(rand_numbers):
+    amatrix = np.array([
+        [4529.4, 9044.9, 13568, 18091, 22615, 27892],
+        [9044.9, 18097, 27139, 36187, 45234, 55789],
+        [13568, 27139, 40721, 54281, 67852, 83685],
+        [18091, 36187, 54281, 72414, 90470, 111580],
+        [22615, 45234, 67852, 90470, 113262, 139476],
+        [27892, 55789, 83685, 111580, 139476, 172860]])
+
+    barray = np.array([1/6, 5/24, 11/120, 19/720,
+                       29/5040, 1/840]).reshape(-1, 1)
+
+    run_vector = np.zeros(6)
+    idx = 0
+
+    run_counter = -1
+    last_val = -1
+    while idx < len(rand_numbers):
+        if rand_numbers[idx] > last_val:
+            run_counter += 1
+            last_val = rand_numbers[idx]
+
+        else:
+            if run_counter >= 5:
+                run_vector[5] = run_vector[5] + 1
+            else:
+                run_vector[run_counter] = run_vector[run_counter] + 1
+
+            last_val = -1
+            run_counter = -1
+
+        idx += 1
+
+    print(run_vector)
+
+    n = len(rand_numbers)
+
+    run_vector = run_vector.reshape(-1, 1)
+
+    step1 = (run_vector - n * barray).T @ amatrix
+
+    step2 = step1 @ (run_vector - n*barray)
+
+    Z = 1/(n-6) * step2
+
+    return Z
 
 
 def run_test(rand_numbers):
@@ -196,6 +240,9 @@ run_test_stat = run_test(rand_numbers)
 print(f'Run Test III Test Statistic: {run_test_stat}')
 
 print(f'N(0, 1) 95% critical value: {stats.norm.ppf(0.95)}')
+
+run_test2_stat = run_test2(rand_numbers)
+print(f'run_testII {run_test2_stat}')
 
 corr_test = correlation_test(rand_numbers, 5)
 print(f'Correlation test using h=5: {corr_test}')
