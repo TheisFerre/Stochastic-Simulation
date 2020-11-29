@@ -7,9 +7,9 @@ To simulate different scenarios, we implemented hospitalization, travelling betw
 
 The gif below shows an example of a simulation of a single population, where lockdown(no movement in population) occurs after some threshold of the total population being infected. These scenarios where investigated, as they have all been part of making COVID-19 have the least impact possible.
 
-![](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/project/pandemic_lockdown.gif)
+![](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/project/pandemic.gif)
 
-A comprehensive study of different settings can be found in the report [report](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/project/report.pdf). 
+A comprehensive study of different settings can be found in the [report](https://github.com/TheisFerre/Stochastic-Simulation/blob/master/project/report.pdf). 
 
 
 ## EXERCISES
